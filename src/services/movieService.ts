@@ -3,17 +3,12 @@ import type { Movie } from "../types/movie";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 
-interface RawMovie {
-  id: number;
-  title: string;
-  poster_path: string;
-  backdrop_path: string;
-  overview: string;
-  release_date: string;
-  vote_average: number;
+interface MovieSearchResponse {
+  results: Movie[];
 }
+
 export async function fetchMovies(query: string): Promise<Movie[]> {
-  const response = await axios.get(`${BASE_URL}/search/movie`, {
+  const response = await axios.get<MovieSearchResponse>(`${BASE_URL}/search/movie`, {
     params: {
       query,
       include_adult: false,
@@ -25,14 +20,5 @@ export async function fetchMovies(query: string): Promise<Movie[]> {
     },
   });
 
-
-  return response.data.results.map((movie: RawMovie) => ({
-    id: movie.id,
-    title: movie.title,
-    poster_path: movie.poster_path,
-    backdrop_path: movie.backdrop_path,
-    overview: movie.overview,
-    release_date: movie.release_date,
-    vote_average: movie.vote_average,
-  }));
+  return response.data.results;
 }

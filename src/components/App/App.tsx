@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {useState } from 'react';
 import './App.css'
 import SearchBar from "../SearchBar/SearchBar";
 import MovieGrid from "../MovieGrid/MovieGrid";
@@ -15,15 +15,9 @@ import toast from "react-hot-toast";
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [selected, setSelected] = useState<Movie | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  
   const handleSearchSubmit = async (newQuery: string) => {
     setIsLoading(true);
     setHasError(false);
@@ -46,7 +40,6 @@ function App() {
 
   const handleMovieSelect = (movie: Movie) => {
     setSelected(movie);
-    console.log("Выбран фильм:", movie.title);
   };
   return (
     <div>
