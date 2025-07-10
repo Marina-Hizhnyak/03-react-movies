@@ -24,6 +24,7 @@ function App() {
     setSelected(null);
   
     try {
+      setMovies([]);
       const results = await fetchMovies(newQuery);
       if (results.length === 0) {
         toast.error("No movies found for your request.");
@@ -42,7 +43,7 @@ function App() {
     setSelected(movie);
   };
   return (
-    <div>
+    <div className="app">
      <SearchBar onSubmit={handleSearchSubmit} />
       {hasError ? (
       <ErrorMessage />
